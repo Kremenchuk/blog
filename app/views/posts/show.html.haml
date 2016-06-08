@@ -1,0 +1,23 @@
+%h2= @post.title
+%p
+  =@post.body
+%form{:action => "/comments/new"}
+  %input{:name => "send", :type => "submit", :value => "New comment to post", :class => "btn btn-success"}
+%table{:border => "1", :cellpadding => "5", :cellspacing => "5", :width => "40%"}
+  -@comment.each do |i|
+    %tr
+      %td= "#{i.body} Comment id = #{i.id}"
+    %tr
+      %td= link_to "Comment", comments_to_comment_path(i.id)
+    %tr
+    -if i.user_id == $user_login.id
+      %td= link_to "Edit", edit_comment_path(i)
+      %td= link_to "Delete", i, method: :delete, data:{confirm: "Delete comment?"}
+    -@comment_to_c.each do |f|
+      -if f.commentable_id == i.id
+        %tr
+          %td= "#{f.body} Comment id = #{f.id}"
+        %tr
+        -if f.user_id == $user_login.id
+          %td= link_to "Edit", edit_comment_path(f)
+          %td= link_to "Delete", f, method: :delete, data:{confirm: "Delete comment?"}

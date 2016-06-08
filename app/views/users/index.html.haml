@@ -1,0 +1,14 @@
+%h1 Login user
+%form{:action => "users/login", :method => "get", :name => "contact_form"}
+  .row
+    .col-md-12
+      =label_tag(:q, "E-mail")
+      %p{:title => "Enter you e-mail"}
+        %input{:maxlength => "45", :name => "email",:size => "25", :value => "new2@gmail.com", :type => "text"}
+    .col-md-12
+      =label_tag(:q, "Password")
+      %p{:title => "You password"}
+        %input{:maxlength => "25", :name => "password_user", :size => "25", :value => "pass", :type => "password_field"}
+  .row
+    .col-md-3
+      %input{:name => "send", :type => "submit", :value => "Confirm", :class => "btn btn-success"}

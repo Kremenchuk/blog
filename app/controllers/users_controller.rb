@@ -1,33 +1,61 @@
 class UsersController < ApplicationController
+
   def index
-
-  end
-
-  def login
-
-  end
-
-  def new
-
-  end
-
-  def create
-
-  end
-
-  def update
-
+    $user_login = nil
   end
 
   def show
+    @email      = String(params[:email])
+    @password   = String(params[:password_user])
+    @user = User.find_by(email: @email)
 
+    if @user != nil
+      if BCrypt::Password.new(@user.password_digest).is_password?(@password)
+        $user_login = @user
+        redirect_to "/posts"
+      else
+        redirect_to action: "index"
+      end
+    else
+      redirect_to action: "new"
+    end
+  end
+
+  def new
+    @user = User.new
+  end
+
+  def create
+    uploaded_io = params[:user][:avatar]
+    File.open(Rails.root.join('public', 'uploads', uploaded_io.original_filename), 'wb') do |file|
+      file.write(uploaded_io.read)
+    end
+
+    @user = User.create!(params[:user])
+    @user.update_attributes(avatar: "#{uploaded_io.original_filename}")
+    @user.save!
+    $user_login = @user
+    redirect_to "/posts"
   end
 
   def edit
-
+    @user = User.find(params[:id])
   end
 
-  def destroy
+  def update
+      uploaded_io = params[:user][:avatar]
+      File.open(Rails.root.join('public', 'uploads', uploaded_io.original_filename), 'wb') do |file|
+        file.write(uploaded_io.read)
+      end
 
+
+    @user = User.find(params[:id])
+    @user.update_attributes(avatar: "#{params[:user][:avatar]}")
+    if @user.errors.empty?
+      redirect_to "/posts"
+    else
+      render "/users/edit"
+    end
   end
+
 end

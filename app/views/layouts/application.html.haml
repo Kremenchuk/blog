@@ -6,4 +6,21 @@
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
     = csrf_meta_tags
   %body
+    - if $user_login != nil
+      =link_to $user_login.name, edit_user_path($user_login)
+      | #{$user_login.id}
+      | #{link_to "Sign out", "/"}
+      %p
+        =$user_login.avatar
+      %p
+        =image_tag("/uploads/"+$user_login.avatar)
+      %p
+        %img{:alt => "Avatar", :src => "/media/rem/CC88DB6C88DB5414/My_Prog/Prob/blog/public/uploads/avatar.jpg"}/
+    - else
+      =link_to "Sign in", users_path
+      | #{link_to "Registration", new_user_path}
+    %p
+      =link_to "Home", posts_path()
+    %p{:style => "color: green"}= flash[:success]
+    %p{:style => "color: red"}= flash[:error]
     = yield

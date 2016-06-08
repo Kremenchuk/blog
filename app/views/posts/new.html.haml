@@ -1,0 +1,13 @@
+%h1 New post
+=form_for @post do |f|
+  .col-md-2
+    Title
+    %br
+    = f.text_field :title, :value => ""
+  .col-md-2
+    Body
+    %br
+    = f.text_field :body, :value => ""
+  .col-md-12
+    %p
+      %input{:id => "regis",:name => "send", :type => "submit", :value => "Send", :class => "btn btn-success"}

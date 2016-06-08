@@ -1,0 +1,11 @@
+%h1 New comment
+=form_for @comment do |f|
+  .col-md-2
+    Body
+    %br
+    = f.text_field :body, :value => ""
+  .col-md-12.no_display_element
+    %input{:name => "type_comments",:value => "Post", :type => "text"}
+  .col-md-12
+    %p
+      %input{:id => "regis",:name => "send", :type => "submit", :value => "Send", :class => "btn btn-success"}

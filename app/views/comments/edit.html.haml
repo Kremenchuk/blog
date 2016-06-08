@@ -1,0 +1,9 @@
+%h1 Edit post
+=form_for @comment do |f|
+  .col-md-2
+    Body
+    %br
+    = f.text_field :body
+  .col-md-12
+    %p
+      %input{:id => "regis",:name => "send", :type => "submit", :value => "Edit", :class => "btn btn-success"}

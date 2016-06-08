@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
-  root 'posts#index'
-  resource :users
-  resource :posts
+  root 'users#index'
+  resources :users
+  resources :posts
+  resources :comments
+  resources :comments_to_comments
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

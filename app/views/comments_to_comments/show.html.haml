@@ -1,0 +1,10 @@
+.row
+  .col-md-12
+    %p
+      = "id коммента #{$master_comment.id}"
+    %p
+      = "id юзера #{$master_comment.user_id}"
+    %p
+      = "ид тому что пренадлежит соммент #{$master_comment.commentable_id}"
+    %p
+      = "#{$master_comment.commentable_type}"

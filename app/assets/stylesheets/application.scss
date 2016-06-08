@@ -13,3 +13,15 @@
  *= require_tree .
  *= require_self
  */
+@import "bootstrap";
+
+.post_title
+{
+  background: rgb(15, 182, 203);
+  border: 1px;
+}
+
+.no_display_element
+{
+  display: none;
+}

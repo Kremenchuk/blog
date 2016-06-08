@@ -1,2 +1,23 @@
-%h1 Posts
-=render @posts
+%h1{:align => "center"} Posts
+.row
+  .col-md-3
+  .col-md-6{:align => "center"}
+    %form{:action => "posts/new"}
+      %input{:name => "send", :type => "submit", :value => "New post", :class => "btn btn-success"}
+  .col-md-3
+.row
+  .col-md-3
+  .col-md-6.post_title{:align => "center"}
+    -@posts.each do |i|
+      %p
+        = link_to i.title, post_path(i)
+        | Post id = #{i.id}
+        -if i.user_id == $user_login.id
+          .col-md-6
+            = link_to "Edit", edit_post_path(i)
+          .col-md-6
+            = link_to "Delete", i, method: :delete, data:{confirm: "Delete post?"}
+      = "User id #{i.user_id}"
+  .col-md-3
+
+
