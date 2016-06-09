@@ -13,7 +13,10 @@
         %tr{:data_posts_id => i.id}
           -if @users.where(id: i.user_id).first.id == i.user_id
             %td{:width => "64"}
-              =image_tag("/" + @users.where(id: i.user_id).first.avatar, :width => "64", :height => "64")
+              -if @users.where(id: f.user_id).first.avatar != ""
+                =image_tag("/" + @users.where(id: i.user_id).first.avatar, :width => "64", :height => "64")
+              -else
+                =image_tag("/no_avatar.jpg")
               %p
                 =@users.where(id: i.user_id).first.name
           -else
