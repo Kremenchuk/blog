@@ -26,16 +26,38 @@ class UsersController < ApplicationController
   end
 
   def create
+
     uploaded_io = params[:user][:avatar]
-    File.open(Rails.root.join('public', 'uploads', uploaded_io.original_filename), 'wb') do |file|
-      file.write(uploaded_io.read)
+    if uploaded_io != nil
+      File.open(Rails.root.join('public', 'uploads', uploaded_io.original_filename), 'wb') do |file|
+        file.write(uploaded_io.read)
+      end
+    end
+    if params[:user][:name] !="" and params[:user][:email] != "" and params[:user][:password] != ""
+      if @user = User.where(email: params[:user][:email]).first == nil
+        @user = User.create!(params[:user])
+        if uploaded_io != nil
+          @user.update_attributes(avatar: "#{uploaded_io.original_filename}")
+        else
+          @user.update_attributes(avatar: "")
+        end
+        @user.save!
+        $user_login = @user
+        if @user.errors.empty?
+          redirect_to "/posts"
+        else
+          flash[:error]="invalid data"
+          redirect_to "/users/new"
+        end
+      else
+        flash[:error]="Email has already been taken"
+        redirect_to "/users/new"
+      end
+    else
+      flash[:error]="invalid data"
+      redirect_to "/users/new"
     end
 
-    @user = User.create!(params[:user])
-    @user.update_attributes(avatar: "#{uploaded_io.original_filename}")
-    @user.save!
-    $user_login = @user
-    redirect_to "/posts"
   end
 
   def edit
@@ -51,11 +73,7 @@ class UsersController < ApplicationController
 
     @user = User.find(params[:id])
     @user.update_attributes(avatar: "#{params[:user][:avatar]}")
-    if @user.errors.empty?
-      redirect_to "/posts"
-    else
-      render "/users/edit"
-    end
+    redirect_to "/posts"
   end
 
 end

@@ -17,11 +17,31 @@
 
 .post_title
 {
-  background: rgb(15, 182, 203);
+  #background: rgb(0, 163, 104);
+  font-size: 25px;
   border: 1px;
 }
 
 .no_display_element
 {
   display: none;
+}
+.deleteAction
+{
+  color: cornflowerblue;
+  cursor: pointer;
+}
+.deleteAction:hover
+{
+  border-bottom: dotted;
+}
+.deleteCommentAction
+{
+  color: cornflowerblue;
+  cursor: pointer;
+}
+
+.deleteCommentAction:hover
+{
+  border-bottom: dotted;
 }

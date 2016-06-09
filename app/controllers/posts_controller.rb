@@ -10,10 +10,12 @@ class PostsController < ApplicationController
 
   def index
     @posts = Post.all.order("id DESC")
+    @users = User.all
   end
 
   def show
     @post = Post.find(params[:id])
+    @users = User.all
     $post_master = @post
     @comment = Comment.where(commentable_id: "#{@post.id}", commentable_type: "Post")
     @comment_to_c = Comment.where(post_id: "#{@post.id}",commentable_type: "Comment")
