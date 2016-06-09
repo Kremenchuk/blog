@@ -52,6 +52,10 @@ class CommentsController < ApplicationController
 
   def destroy
     @comment = Comment.find(params[:id])
+    @comments_slave = Comment.where(commentable_id: "#{@comment.id}",commentable_type: "Comment")
+    @comments_slave.each do |i|
+      @comments_slave.destroy(i.id)
+    end
     @comment.destroy
     redirect_to "/posts/" + String($post_master.id)
   end

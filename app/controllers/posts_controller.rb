@@ -52,6 +52,14 @@ class PostsController < ApplicationController
 
   def destroy
     @post = Post.find(params[:id])
+    @comments_slave = Comment.where(commentable_id: "#{@post.id}",commentable_type: "Post")
+    @comments_slave.each do |i|
+      @comments_slave_comments = Comment.where(commentable_id: "#{i.id}",commentable_type: "Comment")
+      @comments_slave_comments.each do |f|
+        @comments_slave_comments.destroy(f.id)
+      end
+      @comments_slave.destroy(i.id)
+    end
     @post.destroy
     redirect_to action: "index"
   end
