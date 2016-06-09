@@ -25,10 +25,11 @@
             =@users.where(id: i.user_id).first.name
       %td{:align => "center"}= i.body
       %td{:align => "center"}= link_to "Comment", comments_to_comment_path(i.id)
-      -if i.user_id == $user_login.id
-        %td{:align => "center"}= link_to "Edit", edit_comment_path(i)
-        %td{:align => "center"}
-          %span.deleteCommentAction Delete
+      -if $user_login != nil
+        -if i.user_id == $user_login.id
+          %td{:align => "center"}= link_to "Edit", edit_comment_path(i)
+          %td{:align => "center"}
+            %span.deleteCommentAction Delete
     -@comment_to_c.each do |f|
       -if f.commentable_id == i.id
         %tr{:data_comments_id => f.id, :width => "64"}
@@ -47,8 +48,9 @@
               %p
                 =@users.where(id: i.user_id).first.name
           %td{:align => "center"}= f.body
-          -if f.user_id == $user_login.id
-            %td{:align => "center"}= link_to "Edit", edit_comment_path(f)
-            %td{:align => "center"}
-              %span.deleteCommentAction Delete
+          -if $user_login != nil
+            -if f.user_id == $user_login.id
+              %td{:align => "center"}= link_to "Edit", edit_comment_path(f)
+              %td{:align => "center"}
+                %span.deleteCommentAction Delete
 
