@@ -9,13 +9,3 @@
   .col-md-12
     %p
       %input{:id => "regis",:name => "send", :type => "submit", :value => "Send", :class => "btn btn-success"}
-.row
-  .col-md-12
-    %p
-      = "id мастер коммента #{$master_comment.id}"
-    %p
-      = "id юзера #{$master_comment.user_id}"
-    %p
-      = "ид тому что пренадлежит соммент #{$master_comment.commentable_id}"
-    %p
-      = "#{$master_comment.commentable_type}"
