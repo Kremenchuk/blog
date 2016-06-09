@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
 
   def index
-    $user_login = nil
+    #$user_login = nil
   end
 
   def show
