@@ -9,7 +9,7 @@ class UsersController < ApplicationController
     @password   = String(params[:password_user])
     @user = User.find_by(email: @email)
 
-    if @user == nil
+    if @user != nil
       if BCrypt::Password.new(@user.password_digest).is_password?(@password)
         $user_login = @user
         redirect_to "/posts"
