@@ -29,10 +29,11 @@ class UsersController < ApplicationController
 
     uploaded_io = params[:user][:avatar]
     if uploaded_io != nil
-      File.open(Rails.root.join('public', 'uploads', uploaded_io.original_filename), 'wb') do |file|
+      File.open(Rails.root.join('public', uploaded_io.original_filename), 'wb') do |file|
         file.write(uploaded_io.read)
       end
     end
+
     if params[:user][:name] !="" and params[:user][:email] != "" and params[:user][:password] != ""
       if @user = User.where(email: params[:user][:email]).first == nil
         @user = User.create!(params[:user])
@@ -43,16 +44,19 @@ class UsersController < ApplicationController
         end
         @user.save!
         $user_login = @user
+
         if @user.errors.empty?
           redirect_to "/posts"
         else
           flash[:error]="invalid data"
           redirect_to "/users/new"
         end
+
       else
         flash[:error]="Email has already been taken"
         redirect_to "/users/new"
       end
+
     else
       flash[:error]="invalid data"
       redirect_to "/users/new"
@@ -66,7 +70,7 @@ class UsersController < ApplicationController
 
   def update
       uploaded_io = params[:user][:avatar]
-      File.open(Rails.root.join('public', 'uploads', uploaded_io.original_filename), 'wb') do |file|
+      File.open(Rails.root.join('public', uploaded_io.original_filename), 'wb') do |file|
         file.write(uploaded_io.read)
       end
 
