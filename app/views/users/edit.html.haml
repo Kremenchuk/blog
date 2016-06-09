@@ -3,12 +3,12 @@
   .col-md-2
     First name
     %br
-    = f.text_field :name, :value => "Artem Kremenchuk"
+    = f.text_field :name
     .error_box_first_name
   .col-md-2
     E-mail
     %br
-    = f.text_field :email, :value => "new2@gmail.com"
+    = f.text_field :email
     .error_box_email
   .col-md-2
     Avatar
@@ -17,7 +17,7 @@
   .col-md-2
     Password
     %br
-    = f.text_field :password, :value => "pass"
+    = f.text_field :password
   .col-md-12
     %p
       %input{:id => "regis",:name => "send", :type => "submit", :value => "Edit", :class => "btn btn-success"}
