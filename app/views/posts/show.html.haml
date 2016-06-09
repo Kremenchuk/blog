@@ -4,6 +4,9 @@
 -if $user_login != nil
   %form{:action => "/comments/new"}
     %input{:name => "send", :type => "submit", :value => "New comment to post", :class => "btn btn-success"}
+-else
+  %form{:action => "/users/"}
+    %input{:name => "send", :type => "submit", :value => "Sign in", :class => "btn btn-success"}
 %table{:border => "1", :cellpadding => "5", :cellspacing => "5", :width => "40%"}
   -@comment.each do |i|
     %tr{:data_comments_id => i.id}
