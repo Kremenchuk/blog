@@ -3,6 +3,7 @@ gem 'haml-rails'
 gem 'bootstrap-sass'
 gem 'protected_attributes'
 gem 'bcrypt'
+gem "rails_12factor", group: :production
 
 #gem 'simple_form'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -45,5 +46,6 @@ group :development, :test do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+  ruby '2.1.5'
 end
 
