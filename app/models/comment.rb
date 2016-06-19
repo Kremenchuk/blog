@@ -6,6 +6,6 @@ class Comment < ActiveRecord::Base
   #belongs_to :post   #one post is unique owner
 
 
-  has_many :comments, as: :commentable
+  has_many :comments, as: :commentable,dependent: :destroy
   belongs_to :commentable, polymorphic: true
 end

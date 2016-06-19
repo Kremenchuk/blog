@@ -11,6 +11,6 @@ class User < ActiveRecord::Base
   has_secure_password
   validates :password, presence: true, length: { minimum: 3 }
 
-  has_many :comments #many comments from one user
-  has_many :posts    #many post from one user
+  has_many :comments,dependent: :destroy #many comments from one user
+  has_many :posts,dependent: :destroy    #many post from one user
 end

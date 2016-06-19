@@ -5,7 +5,9 @@
     %br
     = f.text_field :body, :value => ""
   .col-md-12.no_display_element
-    %input{:name => "type_comments",:value => "Post", :type => "text"}
+    %input{:name => "type_comments",:value => "#{@type_master}", :type => "text"}
+    .col-md-12.no_display_element
+    %input{:name => "id_master",:value => "#{@id_master}", :type => "text"}
   .col-md-12
     %p
       %input{:id => "regis",:name => "send", :type => "submit", :value => "Send", :class => "btn btn-success"}

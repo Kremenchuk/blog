@@ -2,52 +2,17 @@
 %p
   =@post.body
 -if $user_login != nil
-  %form{:action => "/comments/new"}
+  %form{:action => "/comments/new/" + String(@post.id)}
     %input{:name => "send", :type => "submit", :value => "New comment to post", :class => "btn btn-success"}
 %table{:border => "1", :cellpadding => "5", :cellspacing => "5", :width => "40%"}
   -@comment.each do |i|
     %tr{:data_comments_id => i.id, :width => "64"}
-      -if @users.where(id: i.user_id).first.id == i.user_id
-        %td{:width => "64"}
-          -if @users.where(id: i.user_id).first.avatar != ""
-            =image_tag("/" + @users.where(id: i.user_id).first.avatar, :width => "100", :height => "100")
-          -else
-            =image_tag("/no_avatar.jpg", :width => "64", :height => "64")
-          %p
-            =@users.where(id: i.user_id).first.name
-      -else
-        %td{:width => "64"}
-          =image_tag("/no_avatar.jpg", :width => "64", :height => "64")
-          %p
-            =@users.where(id: i.user_id).first.name
-      %td{:align => "center"}= i.body
-      %td{:align => "center"}= link_to "Comment", comments_to_comment_path(i.id)
-      -if $user_login != nil
-        -if i.user_id == $user_login.id
-          %td{:align => "center"}= link_to "Edit", edit_comment_path(i)
-          %td{:align => "center"}
-            %span.deleteCommentAction Delete
+    =render partial: "/partial/show_post", locals: {eachvar: i}
+
+
     -@comment_to_c.each do |f|
       -if f.commentable_id == i.id
         %tr{:data_comments_id => f.id, :width => "64"}
           %td{:width => "20",:border => "0"}
-          -if @users.where(id: f.user_id).first.id == f.user_id
-            %td{:width => "64"}
-              -if @users.where(id: f.user_id).first.avatar != ""
-                =image_tag("/" + @users.where(id: f.user_id).first.avatar, :width => "64", :height => "64")
-              -else
-                =image_tag("/no_avatar.jpg", :width => "64", :height => "64")
-              %p
-                =@users.where(id: i.user_id).first.name
-          -else
-            %td{:width => "64"}
-              =image_tag("/no_avatar.jpg", :width => "64", :height => "64")
-              %p
-                =@users.where(id: i.user_id).first.name
-          %td{:align => "center"}= f.body
-          -if $user_login != nil
-            -if f.user_id == $user_login.id
-              %td{:align => "center"}= link_to "Edit", edit_comment_path(f)
-              %td{:align => "center"}
-                %span.deleteCommentAction Delete
+          =render partial: "/partial/show_post", locals: {eachvar: f}
 

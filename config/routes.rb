@@ -1,9 +1,10 @@
 Rails.application.routes.draw do
   root 'users#index'
+  get '/posts/new_comments_to_comment/:id' => 'comments#new_comments_to_comment', action: "new_comments_to_comment"
+  get '/comments/new/:id' => 'comments#new'
   resources :users
   resources :posts
   resources :comments
-  resources :comments_to_comments
 
 
   # The priority is based upon order of creation: first created -> highest priority.

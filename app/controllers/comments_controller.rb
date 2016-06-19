@@ -21,14 +21,25 @@ class CommentsController < ApplicationController
 
   def new
     @comment = Comment.new
+    @type_master = "Post"
+    @id_master = Integer(params[:id])
+  end
+
+  def new_comments_to_comment
+    @comment = Comment.new
+    @type_master = "Comment"
+    @id_master = Integer(params[:id])
+    render "new"
   end
 
   def create
     @type_comments = String(params[:type_comments])
     if @type_comments == "Post"
+      @master = Post.find(Integer(params[:id_master]))
       @comment = Comment.new(params[:comment])
       $user_login.comments << @comment
-      $post_master.comments << @comment
+      @master.comments << @comment
+      @comment.post_id = @master.id
       @comment.save!
       if @comment.errors.empty?
         redirect_to "/posts/" + String($post_master.id)
@@ -36,10 +47,11 @@ class CommentsController < ApplicationController
         render "/comments/new"
       end
     else
+      @master = Comment.find(Integer(params[:id_master]))
       @comment_to_c = Comment.create(params[:comment])
       $user_login.comments << @comment_to_c
-      $master_comment.comments << @comment_to_c
-      @comment_to_c.post_id = $post_master.id
+      @master.comments << @comment_to_c
+      @comment_to_c.post_id = @master.post_id
       @comment_to_c.save!
       if @comment_to_c.errors.empty?
         redirect_to "/posts/" + String($post_master.id)
@@ -52,10 +64,6 @@ class CommentsController < ApplicationController
 
   def destroy
     @comment = Comment.find(params[:id])
-    @comments_slave = Comment.where(commentable_id: "#{@comment.id}",commentable_type: "Comment")
-    @comments_slave.each do |i|
-      @comments_slave.destroy(i.id)
-    end
     @comment.destroy
     redirect_to "/posts/" + String($post_master.id)
   end
