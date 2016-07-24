@@ -7,12 +7,17 @@
 %table{:border => "1", :cellpadding => "5", :cellspacing => "5", :width => "40%"}
   -@comment.each do |i|
     %tr{:data_comments_id => i.id, :width => "64"}
-    =render partial: "/partial/show_post", locals: {eachvar: i}
+    =render partial: "/partial/show_post", locals: {eachvar: i, therd_comm:false}
 
 
     -@comment_to_c.each do |f|
       -if f.commentable_id == i.id
         %tr{:data_comments_id => f.id, :width => "64"}
           %td{:width => "20",:border => "0"}
-          =render partial: "/partial/show_post", locals: {eachvar: f}
-
+            =render partial: "/partial/show_post", locals: {eachvar: f, therd_comm:false}
+        -@comment_to_c.each do |com_to_com|
+          -if com_to_com.commentable_id == f.id
+            %tr{:data_comments_id => com_to_com.id, :width => "64"}
+              %td{:width => "20",:border => "0"}
+              %td{:width => "20",:border => "0"}
+                =render partial: "/partial/show_post", locals: {eachvar: com_to_com, therd_comm: true}

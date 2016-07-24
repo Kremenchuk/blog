@@ -1,23 +1,49 @@
--if @users.where(id: eachvar.user_id).first.id == eachvar.user_id
+-if posts_comments_user(eachvar)
   %td{:width => "64"}
-    -if @users.where(id: eachvar.user_id).first.avatar != ""
-      =image_tag("/uploads/" + @users.where(id: eachvar.user_id).first.avatar, :width => "64", :height => "64")
+    -if @user.avatar != ""
+      =image_tag("/uploads/" + @user.avatar, :width => "64", :height => "64")
     -else
       =image_tag("/no_avatar.jpg", :width => "64", :height => "64")
     %p
-      =@users.where(id: eachvar.user_id).first.name
+      =@user.name
 -else
   %td{:width => "64"}
     =image_tag("/no_avatar.jpg", :width => "64", :height => "64")
     %p
-      =@users.where(id: eachvar.user_id).first.name
+      =@user.name
 %td{:align => "center"}
   = eachvar.body
-%td{:align => "center"}
-  = link_to "Comment", "new_comments_to_comment/" + String(eachvar.id)
+-if therd_comm == false
+  %td{:align => "center"}
+    = link_to "Comment", "new_comments_to_comment/" + String(eachvar.id)
 -if $user_login != nil
   -if eachvar.user_id == $user_login.id
     %td{:align => "center"}
       = link_to "Edit", edit_comment_path(eachvar)
     %td{:align => "center"}
       %span.deleteCommentAction Delete
+
+
+/-if @users.where(id: eachvar.user_id).first.id == eachvar.user_id
+/  %td{:width => "64"}
+/    -if @users.where(id: eachvar.user_id).first.avatar != ""
+/      =image_tag("/uploads/" + @users.where(id: eachvar.user_id).first.avatar, :width => "64", :height => "64")
+/    -else
+/      =image_tag("/no_avatar.jpg", :width => "64", :height => "64")
+/    %p
+/      =@users.where(id: eachvar.user_id).first.name
+/-else
+/  %td{:width => "64"}
+/    =image_tag("/no_avatar.jpg", :width => "64", :height => "64")
+/    %p
+/      =@users.where(id: eachvar.user_id).first.name
+/%td{:align => "center"}
+/  = eachvar.body
+/%td{:align => "center"}
+/  = link_to "Comment", "new_comments_to_comment/" + String(eachvar.id)
+/-if $user_login != nil
+/  -if eachvar.user_id == $user_login.id
+/    %td{:align => "center"}
+/      = link_to "Edit", edit_comment_path(eachvar)
+/    %td{:align => "center"}
+/      %span.deleteCommentAction Delete

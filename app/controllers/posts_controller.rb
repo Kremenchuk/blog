@@ -16,8 +16,8 @@ class PostsController < ApplicationController
   def show
     @post = Post.find(params[:id])
     @users = User.all
-    $post_master = @post
-    @comment = Comment.where(commentable_id: "#{@post.id}", commentable_type: "Post")
+    #$post_master = @post
+    @comment = Comment.where(post_id: "#{@post.id}", commentable_type: "Post")
     @comment_to_c = Comment.where(post_id: "#{@post.id}",commentable_type: "Comment")
   end
 

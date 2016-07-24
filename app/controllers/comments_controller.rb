@@ -23,38 +23,41 @@ class CommentsController < ApplicationController
     @comment = Comment.new
     @type_master = "Post"
     @id_master = Integer(params[:id])
+    @id_master_post = Integer(params[:id])
   end
 
   def new_comments_to_comment
     @comment = Comment.new
     @type_master = "Comment"
     @id_master = Integer(params[:id])
+    @id_master_post = Comment.find(params[:id]).post_id
     render "new"
   end
 
   def create
     @type_comments = String(params[:type_comments])
+    @master_comment = Comment.find(Integer(params[:id_master]))
+    @master_post = Post.find(Integer(@master_comment.post_id))
+
     if @type_comments == "Post"
-      @master = Post.find(Integer(params[:id_master]))
       @comment = Comment.new(params[:comment])
       $user_login.comments << @comment
-      @master.comments << @comment
-      @comment.post_id = @master.id
+      @master_post.comments << @comment
+      @comment.post_id = @master_post.id
       @comment.save!
       if @comment.errors.empty?
-        redirect_to "/posts/" + String($post_master.id)
+        redirect_to "/posts/" + String(@master_post.id)
       else
         render "/comments/new"
       end
     else
-      @master = Comment.find(Integer(params[:id_master]))
       @comment_to_c = Comment.create(params[:comment])
       $user_login.comments << @comment_to_c
-      @master.comments << @comment_to_c
-      @comment_to_c.post_id = @master.post_id
+      @master_comment.comments << @comment_to_c
+      @comment_to_c.post_id = @master_comment.post_id
       @comment_to_c.save!
       if @comment_to_c.errors.empty?
-        redirect_to "/posts/" + String($post_master.id)
+        redirect_to "/posts/" + String(@master_post.id)
       else
         render "/comments_to_comments/new"
       end
